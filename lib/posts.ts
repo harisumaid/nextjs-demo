@@ -23,7 +23,7 @@ export function getSortedPostsData() {
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data
+      ...(matterResult.data as { date: string; id: string })
     }
   })
   // Sort posts by date
@@ -59,14 +59,14 @@ export async function getPostData(id) {
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents)
-  const processedContent =  await remark().use(html).process(matterResult.content)
+  const processedContent = await remark().use(html).process(matterResult.content)
   const contentHtml = processedContent.toString()
 
   // Combine the data with the id
   return {
     id,
     contentHtml,
-    ...matterResult.data
+    ...(matterResult.data as { date: string; title: string })
   }
 }
 
